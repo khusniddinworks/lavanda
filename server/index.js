@@ -164,7 +164,12 @@ function attachRoutes(db) {
     try {
       const body = req.body || {};
       const phone = String(body.phone || "").replace(/\s/g, "").slice(0, 32);
-      if (!phone) return res.status(400).json({ error: "phone required" });
+      console.log(`Lead attempt: phone="${phone}" name="${body.name}"`);
+      
+      if (!phone) {
+        console.log("Lead attempt: FAILED (phone required)");
+        return res.status(400).json({ error: "phone required" });
+      }
 
       const sessionId = body.sessionId ? String(body.sessionId).slice(0, 64) : null;
       if (sessionId) {
