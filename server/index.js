@@ -21,12 +21,17 @@ const ADMIN_PASS = process.env.ADMIN_PASS || "lavandaorom1212";
 
 function requireAdmin(req, res, next) {
   const key = req.headers["x-admin-key"] || req.query.key;
-  if (!key) return res.status(401).json({ error: "Unauthorized" });
+  if (!key) {
+    console.log("Admin attempt: No key provided");
+    return res.status(401).json({ error: "Unauthorized" });
+  }
 
   const [u, p] = key.split(":");
   if (u !== ADMIN_USER || p !== ADMIN_PASS) {
+    console.log(`Admin attempt: FAILED for user "${u}" (wrong credentials)`);
     return res.status(401).json({ error: "Unauthorized" });
   }
+  console.log(`Admin attempt: SUCCESS for user "${u}"`);
   next();
 }
 
