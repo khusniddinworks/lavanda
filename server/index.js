@@ -397,6 +397,18 @@ const PORT = process.env.PORT || 3000;
     res.sendFile(path.join(ROOT, "index.html"));
   });
 
+  const EXTERNAL_URL = process.env.RENDER_EXTERNAL_URL;
+  if (EXTERNAL_URL) {
+    setInterval(() => {
+      const https = require("https");
+      https.get(EXTERNAL_URL, (res) => {
+        console.log(`Keep-alive ping to ${EXTERNAL_URL}: ${res.statusCode}`);
+      }).on("error", (err) => {
+        console.error(`Keep-alive error: ${err.message}`);
+      });
+    }, 14 * 60 * 1000); // 14 daqiqa
+  }
+
   app.listen(PORT, () => {
     console.log(`Orom Yo‘stiq server http://localhost:${PORT}`);
     console.log(`Admin: http://localhost:${PORT}/admin/`);
