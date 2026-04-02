@@ -8,6 +8,29 @@
     return Array.prototype.slice.call((root || document).querySelectorAll(sel));
   }
 
+  /* Mobile menu */
+  var burger = qs("[data-burger-btn]");
+  var mobileMenu = qs("[data-mobile-menu]");
+  var mobileLinks = qsa("[data-mobile-link]");
+
+  function toggleMenu() {
+    var active = burger.classList.toggle("is-active");
+    mobileMenu.classList.toggle("is-active", active);
+    document.body.style.overflow = active ? "hidden" : "";
+  }
+
+  if (burger && mobileMenu) {
+    burger.addEventListener("click", toggleMenu);
+  }
+
+  mobileLinks.forEach(function (link) {
+    link.addEventListener("click", function () {
+      if (burger.classList.contains("is-active")) {
+        toggleMenu();
+      }
+    });
+  });
+
   /* Scroll reveal */
   var io = new IntersectionObserver(
     function (entries) {

@@ -14,23 +14,31 @@
     <header class="topbar">
       <div class="topbar-inner wrap">
         <a class="brand" href="en/">Orom Yostiq</a>
-        <div style="display: flex; gap: 0.5rem; align-items: center">
+        <div class="topbar-actions">
           <div class="lang-switcher">
             <a href="../" class="lang-link">UZ</a>
             <a href="../ru/" class="lang-link">RU</a>
             <a href="./" class="lang-link is-active">EN</a>
           </div>
-          <a class="btn-ghost" href="#tanish" data-track="nav_tanish">Start</a>
-          <button type="button" class="btn-ghost" data-lead-open="header">Contact</button>
-          <a
-            class="topbar-cta"
-            href="#takliflar"
-            data-track="nav_takliflar"
-            >Uzum Offers</a
-          >
+          <nav class="desktop-nav">
+            <a class="btn-ghost" href="#tanish" data-track="nav_tanish">Start</a>
+            <button type="button" class="btn-ghost" data-lead-open="header">Contact</button>
+            <a class="topbar-cta" href="https://uzum.uz/uz/product/lavanda-yostiq-sifatli-ametist---282-2327906?skuId=8345012" target="_blank" rel="noopener noreferrer" data-track="nav_takliflar">Uzum Offers</a>
+          </nav>
+          <button class="burger-btn" data-burger-btn aria-label="Menu" type="button">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
     </header>
+
+    <div class="mobile-menu" data-mobile-menu>
+      <a class="mobile-nav-link" href="#tanish" data-mobile-link>Start</a>
+      <a class="mobile-nav-link" href="#" data-lead-open="mobile" data-mobile-link>Contact</a>
+      <a class="mobile-nav-link" href="#takliflar" data-mobile-link>Uzum Offers</a>
+    </div>
 
     <main>
       <section class="hero" id="bosh">

@@ -78,6 +78,92 @@ a {
   margin: 0 auto;
 }
 
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.desktop-nav {
+  display: none;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media (min-width: 1000px) {
+  .desktop-nav {
+    display: flex;
+  }
+}
+
+.burger-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 28px;
+  height: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 60;
+}
+
+@media (min-width: 1000px) {
+  .burger-btn {
+    display: none;
+  }
+}
+
+.burger-btn span {
+  width: 100%;
+  height: 2.5px;
+  background: var(--lavender-deep);
+  border-radius: 99px;
+  transition: all 0.3s var(--ease);
+}
+
+.burger-btn.is-active span:nth-child(1) {
+  transform: translateY(8.5px) rotate(45deg);
+}
+.burger-btn.is-active span:nth-child(2) {
+  opacity: 0;
+}
+.burger-btn.is-active span:nth-child(3) {
+  transform: translateY(-8.5px) rotate(-45deg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 48;
+  background: var(--bg);
+  padding: 5.5rem 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transform: translateX(100%);
+  transition: transform 0.4s var(--ease);
+}
+
+.mobile-menu.is-active {
+  transform: translateX(0);
+}
+
+.mobile-nav-link {
+  font-size: 1.35rem;
+  font-family: var(--font);
+  font-weight: 700;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(139, 122, 184, 0.12);
+  padding-bottom: 0.75rem;
+}
+
+.mobile-nav-link:last-child {
+  border: none;
+}
+
 .brand {
   font-family: var(--font);
   font-weight: 600;
@@ -85,6 +171,7 @@ a {
   font-size: clamp(1rem, 4vw, 1.15rem);
   color: var(--ink);
   text-decoration: none;
+  z-index: 60;
 }
 
 .topbar-cta {
