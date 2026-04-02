@@ -1,16 +1,13 @@
 "use strict";
 
 const path = require("path");
-require("dotenv").config({ path: path.join(__dirname, "..", ".env") });
 const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const { getDb } = require("./db");
 
 const ROOT = path.join(__dirname, "..");
-const DATA_DIR = process.env.DATA_DIR
-  ? path.resolve(process.env.DATA_DIR)
-  : path.join(ROOT, "data");
+const DATA_DIR = path.join(ROOT, "data");
 const DB_PATH = path.join(DATA_DIR, "analytics.db");
 
 if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -19,11 +16,15 @@ const app = express();
 app.use(cors());
 app.use(express.json({ limit: "256kb" }));
 
-const ADMIN_SECRET = process.env.ADMIN_SECRET || "change-me-in-production";
+const ADMIN_USER = process.env.ADMIN_USER || "lavanda";
+const ADMIN_PASS = process.env.ADMIN_PASS || "lavandaorom1212";
 
 function requireAdmin(req, res, next) {
   const key = req.headers["x-admin-key"] || req.query.key;
-  if (key !== ADMIN_SECRET) {
+  if (!key) return res.status(401).json({ error: "Unauthorized" });
+
+  const [u, p] = key.split(":");
+  if (u !== ADMIN_USER || p !== ADMIN_PASS) {
     return res.status(401).json({ error: "Unauthorized" });
   }
   next();
@@ -389,21 +390,9 @@ const PORT = process.env.PORT || 3000;
   });
 
   app.listen(PORT, () => {
-    const base = (
-      process.env.PUBLIC_URL ||
-      process.env.RENDER_EXTERNAL_URL ||
-      ""
-    )
-      .trim()
-      .replace(/\/$/, "");
-    console.log(`Orom Yo‘stiq — port ${PORT}`);
-    if (base) {
-      console.log(`Sayt: ${base}/`);
-      console.log(`Admin: ${base}/admin/`);
-    }
-    if (ADMIN_SECRET === "change-me-in-production") {
-      console.warn("ADMIN_SECRET: default — hostingda ENV bilan almashtiring.");
-    }
+    console.log(`Orom Yo‘stiq server http://localhost:${PORT}`);
+    console.log(`Admin: http://localhost:${PORT}/admin/`);
+    console.log(`Admin login: ${ADMIN_USER} / ${ADMIN_PASS}`);
   });
 })().catch((err) => {
   console.error(err);

@@ -184,10 +184,15 @@
   <body>
     <div id="login" class="login">
       <h1>Admin panel</h1>
-      <p class="sub">Kalit so‘z serverdagi ADMIN_SECRET bilan bir xil bo‘lishi kerak.</p>
+      <p class="sub">Tizimga kirish uchun ism va parolni kiriting.</p>
       <div id="login-err" class="err" style="display: none"></div>
-      <label for="key">Admin kalit</label>
-      <input id="key" type="password" autocomplete="current-password" placeholder="ADMIN_SECRET" />
+      
+      <label for="username">Ism</label>
+      <input id="username" type="text" autocomplete="username" placeholder="lavanda" />
+
+      <label for="key">Parol</label>
+      <input id="key" type="password" autocomplete="current-password" placeholder="••••••••" />
+      
       <button type="button" id="login-btn">Kirish</button>
     </div>
 
@@ -209,7 +214,7 @@
           Yangilash
         </button>
         <a id="export-csv" href="#" target="_blank">Lidlar CSV</a>
-        <a href="../">Sahifaga qaytish</a>
+        <a href="/">Sahifaga qaytish</a>
       </div>
 
       <div class="grid" id="kpis"></div>
@@ -266,7 +271,6 @@
       </div>
     </div>
 
-    <script src="../js/base.js"></script>
     <script src="./admin.js"></script>
   </body>
 </html>

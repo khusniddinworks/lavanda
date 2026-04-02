@@ -1,11 +1,7 @@
 (function () {
   "use strict";
 
-  function apiUrl(path) {
-    return typeof window !== "undefined" && window.__OROM_API__
-      ? window.__OROM_API__(path)
-      : path;
-  }
+  var API = "";
   var STORAGE_KEY = "orom_aid";
   var SESSION_KEY = "orom_sid";
 
@@ -104,7 +100,7 @@
     },
 
     post: function (path, body) {
-      var url = apiUrl(path);
+      var url = API + path;
       var data = JSON.stringify(body);
       if (navigator.sendBeacon) {
         try {

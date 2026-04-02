@@ -35,14 +35,10 @@
   }
 
   function fetchSummary(days, key) {
-    var sumUrl =
-      (window.__OROM_API__ || function (p) {
-        return p;
-      })("/api/admin/summary?days=" + encodeURIComponent(days));
-    return fetch(sumUrl, {
+    return fetch("/api/admin/summary?days=" + encodeURIComponent(days), {
       headers: { "X-Admin-Key": key },
     }).then(function (r) {
-      if (r.status === 401) throw new Error("Noto‘g‘ri kalit");
+      if (r.status === 401) throw new Error("Ism yoki parol noto‘g‘ri");
       if (!r.ok) throw new Error("Server xatosi");
       return r.json();
     });
@@ -218,11 +214,8 @@
             "</td></tr>"
           );
         });
-        $("export-csv").href = (
-          window.__OROM_API__ || function (p) {
-            return p;
-          }
-        )("/api/admin/export/leads.csv?key=" + encodeURIComponent(key));
+        $("export-csv").href =
+          "/api/admin/export/leads.csv?key=" + encodeURIComponent(key);
       })
       .catch(function (e) {
         showErr($("dash-err"), e.message || "Xato");
@@ -236,21 +229,29 @@
   }
 
   $("login-btn").addEventListener("click", function () {
-    var key = $("key").value.trim();
-    if (!key) {
-      showErr($("login-err"), "Kalit kiriting");
+    var user = $("username").value.trim();
+    var pass = $("key").value.trim();
+    if (!user || !pass) {
+      showErr($("login-err"), "Ism va parolni kiriting");
       return;
     }
     showErr($("login-err"), "");
-    fetchSummary(7, key)
+    var combinedKey = user + ":" + pass;
+    fetchSummary(7, combinedKey)
       .then(function () {
-        setKey(key);
+        setKey(combinedKey);
         enterDash();
       })
-      .catch(function () {
-        showErr($("login-err"), "Kalit noto‘g‘ri yoki server ishlamayapti.");
+      .catch(function (e) {
+        showErr($("login-err"), e.message || "Tizimga kirishda xato.");
       });
   });
+
+  function onEnter(e) {
+    if (e.key === "Enter") $("login-btn").click();
+  }
+  $("username").addEventListener("keyup", onEnter);
+  $("key").addEventListener("keyup", onEnter);
 
   $("refresh").addEventListener("click", load);
   $("days").addEventListener("change", load);

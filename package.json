@@ -12,7 +12,6 @@
     "node": ">=18"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
     "cors": "^2.8.5",
     "express": "^4.21.2",
     "sql.js": "^1.12.0"
