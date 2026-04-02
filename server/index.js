@@ -378,10 +378,7 @@ const PORT = process.env.PORT || 3000;
   const db = await getDb(DB_PATH);
   attachRoutes(db);
 
-  app.get("/admin/", (req, res) => {
-    res.sendFile(path.join(ROOT, "admin", "index.html"));
-  });
-  app.get("/admin", (req, res) => res.redirect(301, "/admin/"));
+  app.use("/admin", express.static(path.join(ROOT, "admin")));
   app.use("/assets", express.static(path.join(ROOT, "assets")));
   app.use("/video", express.static(path.join(ROOT, "video")));
   app.use("/css", express.static(path.join(ROOT, "css")));
