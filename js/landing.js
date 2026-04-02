@@ -180,7 +180,11 @@
 
       if (!phone) return;
 
-      fetch("/api/lead", {
+      fetch(
+        typeof window !== "undefined" && window.__OROM_API__
+          ? window.__OROM_API__("/api/lead")
+          : "/api/lead",
+        {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

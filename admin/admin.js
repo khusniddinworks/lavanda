@@ -35,7 +35,11 @@
   }
 
   function fetchSummary(days, key) {
-    return fetch("/api/admin/summary?days=" + encodeURIComponent(days), {
+    var sumUrl =
+      (window.__OROM_API__ || function (p) {
+        return p;
+      })("/api/admin/summary?days=" + encodeURIComponent(days));
+    return fetch(sumUrl, {
       headers: { "X-Admin-Key": key },
     }).then(function (r) {
       if (r.status === 401) throw new Error("Noto‘g‘ri kalit");
@@ -214,8 +218,11 @@
             "</td></tr>"
           );
         });
-        $("export-csv").href =
-          "/api/admin/export/leads.csv?key=" + encodeURIComponent(key);
+        $("export-csv").href = (
+          window.__OROM_API__ || function (p) {
+            return p;
+          }
+        )("/api/admin/export/leads.csv?key=" + encodeURIComponent(key));
       })
       .catch(function (e) {
         showErr($("dash-err"), e.message || "Xato");
